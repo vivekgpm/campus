@@ -1,0 +1,22 @@
+To: registrar@cityengineering.edu.in
+Subject: [Campus Buddy] Unresolved student query - Ticket #4
+
+Dear Authority,
+
+Campus Buddy could not answer the following question from its documents.
+
+Ticket ID : 4
+Time      : 2026-10-03 19:20
+Category  : other
+Student   : Rahul and my email is rahul (rahul.sharma@example.com)
+
+Question:
+please raise the ticket for robotics club and labs
+
+What the agent tried:
+- Final search query : submit support ticket robotics club labs
+- Reason it failed   : No information about robotics club or labs is present
+
+Please respond to the student directly.
+
+- Campus Buddy (automated message)

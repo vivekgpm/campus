@@ -1,0 +1,22 @@
+To: registrar@cityengineering.edu.in
+Subject: [Campus Buddy] Unresolved query - Ticket #6
+
+Dear Authority,
+
+Campus Buddy could not answer the following query from its documents.
+
+Ticket ID : 6
+Time      : 2026-10-04 19:36
+Category  : courses
+Student   : Anonymous (not given)
+
+Question:
+tell me how many departments are there
+
+What the agent tried:
+- Final search query : total number of academic departments
+- Reason it failed   : context lists some departments but does not give a total count
+
+Please respond to the student directly.
+
+- Campus Buddy (automated message)

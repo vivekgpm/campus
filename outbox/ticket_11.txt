@@ -1,0 +1,22 @@
+To: registrar@cityengineering.edu.in
+Subject: [Campus Buddy] Unresolved query - Ticket #11
+
+Dear Authority,
+
+Campus Buddy could not answer the following query from its documents.
+
+Ticket ID : 11
+Time      : 2026-10-04 20:27
+Category  : faculty
+Student   : Anonymous (not given)
+
+Question:
+who's the HOD of CIvil engineering
+
+What the agent tried:
+- Final search query : Civil Engineering department head name
+- Reason it failed   : No HOD name provided
+
+Please respond to the student directly.
+
+- Campus Buddy (automated message)

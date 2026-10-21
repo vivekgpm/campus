@@ -1,0 +1,22 @@
+To: registrar@cityengineering.edu.in
+Subject: [Campus Buddy] Unresolved student query - Ticket #2
+
+Dear Authority,
+
+Campus Buddy could not answer the following question from its documents.
+
+Ticket ID : 2
+Time      : 2026-10-03 17:40
+Category  : courses
+Student   : Anonymous (not given)
+
+Question:
+ok. tell me about NASA programme in the collge
+
+What the agent tried:
+- Final search query : NASA college student program overview
+- Reason it failed   : No NASA programme information is present in the provided context
+
+Please respond to the student directly.
+
+- Campus Buddy (automated message)

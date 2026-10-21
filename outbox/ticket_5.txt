@@ -1,0 +1,22 @@
+To: registrar@cityengineering.edu.in
+Subject: [Campus Buddy] Unresolved query - Ticket #5
+
+Dear Authority,
+
+Campus Buddy could not answer the following query from its documents.
+
+Ticket ID : 5
+Time      : 2026-10-04 19:08
+Category  : faculty
+Student   : Anonymous (not given)
+
+Question:
+who's the HOD of Artificial Intelligence & Machine Learning
+
+What the agent tried:
+- Final search query : Artificial Intelligence Machine Learning department head
+- Reason it failed   : no HOD name provided
+
+Please respond to the student directly.
+
+- Campus Buddy (automated message)

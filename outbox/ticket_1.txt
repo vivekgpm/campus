@@ -1,0 +1,22 @@
+To: registrar@cityengineering.edu.in
+Subject: [Campus Buddy] Unresolved student query - Ticket #1
+
+Dear Authority,
+
+Campus Buddy could not answer the following question from its documents.
+
+Ticket ID : 1
+Time      : 2026-10-03 17:04
+Category  : other
+Student   : Anonymous (not given)
+
+Question:
+can you log ticket to get this info
+
+What the agent tried:
+- Final search query : submit help desk ticket for information request
+- Reason it failed   : No ticket logging information is present in the provided context
+
+Please respond to the student directly.
+
+- Campus Buddy (automated message)

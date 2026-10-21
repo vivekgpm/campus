@@ -1,0 +1,7 @@
+streamlit
+langgraph
+langchain-groq
+pypdf
+rank_bm25
+chromadb
+python-dotenv

@@ -15,4 +15,4 @@ server/data/
 .env.local
 .DS_Store
 
-.env.exmaple
+*.env.example

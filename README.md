@@ -62,46 +62,57 @@ campus/
 
 ## Setup
 
-```bash
-git clone <this-repo>
-cd campus
-python -m venv .venv
+1. **Clone the repository**
+   ```bash
+   git clone <this-repo>
+   cd campus
+   ```
 
-# Windows
-.venv\Scripts\activate
-# macOS / Linux
-source .venv/bin/activate
+2. **Create a virtual environment**
+   ```bash
+   python -m venv .venv
+   ```
 
-pip install -r requirements.txt
-```
+3. **Activate the virtual environment**
+   - **Windows**
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - **macOS / Linux**
+     ```bash
+     source .venv/bin/activate
+     ```
 
-Configure your key:
+4. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```bash
-cp .env.example .env      # Windows: copy .env.example .env
-```
+5. **Configure your key**
+   ```bash
+   cp .env.example .env      # Windows: copy .env.example .env
+   ```
 
-```dotenv
-GROQ_API_KEY=gsk_...                      # free key from console.groq.com
-MAIN_MODEL=openai/gpt-oss-120b            # writes answers
-FAST_MODEL=openai/gpt-oss-20b             # cheap judgement calls
-AUTHORITY_EMAIL=placement@gndecb.ac.in    # who unresolved queries go to
-```
+   ```dotenv
+   GROQ_API_KEY=gsk_...                      # free key from console.groq.com
+   MAIN_MODEL=openai/gpt-oss-120b            # writes answers
+   FAST_MODEL=openai/gpt-oss-20b             # cheap judgement calls
+   AUTHORITY_EMAIL=placement@gndecb.ac.in    # who unresolved queries go to
+   ```
 
-Generate the knowledge-base PDFs (optional — they are already committed):
+6. **Generate the knowledge-base PDFs (optional — they are already committed)**
+   ```bash
+   pip install reportlab
+   python generate_pdfs.py
+   ```
 
-```bash
-pip install reportlab
-python generate_pdfs.py
-```
+7. **Run the app**
+   ```bash
+   streamlit run app.py
+   ```
 
-Run the app:
-
-```bash
-streamlit run app.py
-```
-
-Then open the URL Streamlit prints (default http://localhost:8501).
+8. **Open the URL**
+   Then open the URL Streamlit prints (default http://localhost:8501).
 
 ---
 

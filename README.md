@@ -6,6 +6,18 @@ Built as a teaching/demo project: every LLM instruction is in one file, every ag
 
 ---
 
+## What is Campus Buddy? (Layman's Overview)
+
+Think of **Campus Buddy** as a smart virtual receptionist for college students. When students have questions about placement drives, upcoming recruiters, hostel fees, or admission details, they don't need to scroll through lengthy documents or wait in line at the college office.
+
+### How it Helps:
+- **Instant & Accurate Answers:** Answers questions in seconds using only official college documents (PDFs), so it never invents or guesses false information.
+- **24/7 Availability:** Students can get answers anytime without visiting office desks.
+- **Smart Safety Guardrails:** Blocks inappropriate language or attempted misuse before sending queries to artificial intelligence models.
+- **Human Escalation:** If the assistant cannot find an exact answer in the documents, it automatically creates a helpdesk ticket and drafts an email for the college authorities to assist the student directly.
+
+---
+
 ## Features
 
 - **Grounded answers only** — the answerer may use nothing but retrieved PDF chunks; no outside knowledge.

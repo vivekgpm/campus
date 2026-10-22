@@ -173,6 +173,36 @@ def list_tickets() -> list:
                             "FROM tickets ORDER BY id DESC").fetchall()
 
 
+def update_ticket_contact(ticket_id: int, student_name: str = "", student_contact: str = "") -> bool:
+    """Attach later-provided contact details to an open ticket and refresh its draft email."""
+    with _db() as conn:
+        row = conn.execute(
+            "SELECT category, question, student_name, student_contact "
+            "FROM tickets WHERE id=? AND status='OPEN'", (ticket_id,)
+        ).fetchone()
+        if not row:
+            return False
+
+        category, question, old_name, old_contact = row
+        name = student_name or ("" if old_name == "Anonymous" else old_name)
+        contact = student_contact or ("" if old_contact == "not given" else old_contact)
+        conn.execute(
+            "UPDATE tickets SET student_name=?, student_contact=? WHERE id=?",
+            (name or "Anonymous", contact or "not given", ticket_id)
+        )
+
+    # This project saves a draft locally rather than sending real email.
+    send_authority_email(ticket_id, {
+        "category": category,
+        "question": question,
+        "student_name": name,
+        "student_contact": contact,
+        "query": "Contact details added after ticket creation",
+        "grade_reason": "Student supplied contact details after the original request.",
+    })
+    return True
+
+
 def send_authority_email(ticket_id: int, state: dict) -> str:
     """TOOL: SIMULATED email - saved as a file and printed to the console."""
     config.OUTBOX_DIR.mkdir(exist_ok=True)
@@ -239,6 +269,29 @@ def extract_contact_info(text: str, existing_name: str = "", existing_contact: s
                 if clean_prefix and len(clean_prefix.split()) <= 2:
                     name = clean_prefix
     return name, contact
+
+
+def is_contact_only_message(text: str, student_name: str = "", student_contact: str = "") -> bool:
+    """Recognize a contact-details follow-up without intercepting a real question."""
+    email = re.search(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", text)
+    phone = re.search(r"(?:\+?91[\-\s]?)?[6789]\d{9}", text)
+    if not (email or phone):
+        return False
+    if "?" in text:
+        return False
+
+    without_contact = re.sub(r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", " ", text)
+    without_contact = re.sub(r"(?:\+?91[\-\s]?)?[6789]\d{9}", " ", without_contact)
+    tokens = re.findall(r"[a-z]+", without_contact.lower())
+    allowed = {
+        "my", "name", "is", "i", "am", "im", "this", "myself", "and", "email", "e", "mail",
+        "id", "address", "phone", "number", "contact", "details", "here", "are", "the", "a",
+        "provided", "sharing", "share", "please", "kindly", "thanks", "thank", "you", "for",
+        "with", "also", "this", "to", "reach", "me", "at", ":",
+    }
+    name_tokens = set(re.findall(r"[a-z]+", (student_name or "").lower()))
+    remaining = [token for token in tokens if token not in allowed and token not in name_tokens]
+    return not remaining
 
 # ===========================================================================
 # 5. AGENT NODES - each is a small function: state in -> changes out
@@ -365,8 +418,8 @@ def escalation_officer(state):
     student_contact = (state.get("student_contact") or "").strip()
     if student_contact:
         contact_note = (
-            f"Since you provided your contact details (**{student_contact}**), "
-            "our college administration will review the query and get back to you directly."
+            f"Your contact details (**{student_contact}**) are attached to the ticket and its saved email draft. "
+            "A staff member must review and send that draft before the college can contact you."
         )
     else:
         contact_note = (

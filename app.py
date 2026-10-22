@@ -4,6 +4,7 @@ Run:  streamlit run app.py
 The UI only collects input and shows output. All thinking happens in agents.py.
 """
 import importlib
+import re
 import streamlit as st
 import prompts
 import config
@@ -85,14 +86,48 @@ for i, m in enumerate(st.session_state.messages):
 
 if question := st.chat_input("Ask about placements, packages, recruiters, TPO contact, internships, programs…"):
     # Extract name and contact from chat if shared by the student
-    ext_name, ext_contact = agents.extract_contact_info(
-        question, st.session_state.student_name, st.session_state.student_contact
-    )
+    message_name, message_contact = agents.extract_contact_info(question)
+    ext_name = message_name or st.session_state.student_name
+    ext_contact = message_contact or st.session_state.student_contact
     st.session_state.student_name = ext_name
     st.session_state.student_contact = ext_contact
 
     st.session_state.messages.append({"role": "user", "content": question})
     render(st.session_state.messages[-1], len(st.session_state.messages))
+
+    # Treat a contact-only reply as ticket follow-up, not as a new college question.
+    if agents.is_contact_only_message(question, ext_name, ext_contact):
+        pending_ticket_id = st.session_state.get("pending_ticket_id")
+        if not pending_ticket_id:
+            # Recover the ticket number from the current chat for sessions created
+            # before pending_ticket_id was added to session state.
+            for prior_message in reversed(st.session_state.messages[:-1]):
+                if prior_message.get("role") != "assistant":
+                    continue
+                ticket_match = re.search(r"Ticket\s*#(\d+)", prior_message.get("content", ""), re.I)
+                if ticket_match:
+                    pending_ticket_id = int(ticket_match.group(1))
+                    st.session_state.pending_ticket_id = pending_ticket_id
+                    break
+        if pending_ticket_id and agents.update_ticket_contact(pending_ticket_id, ext_name, ext_contact):
+            contact_reply = (
+                f"Thanks, **{ext_name or 'your contact details'}**. I've added your details to "
+                f"ticket **#{pending_ticket_id}** and refreshed its saved email draft. "
+                "The draft is stored locally and is not sent automatically."
+            )
+        elif pending_ticket_id:
+            st.session_state.pop("pending_ticket_id", None)
+            contact_reply = (
+                "Thanks, I've saved your details for this session. I couldn't find an open ticket "
+                "to attach them to. Please include them when you submit the college question."
+            )
+        else:
+            contact_reply = (
+                "Thanks, I've saved your details for this session. Ask your college question "
+                "whenever you're ready."
+            )
+        st.session_state.messages.append({"role": "assistant", "content": contact_reply})
+        st.rerun()
 
     with st.spinner("Agents working…"):
         result = agents.run_agent(
@@ -102,6 +137,8 @@ if question := st.chat_input("Ask about placements, packages, recruiters, TPO co
             st.session_state.student_name = result["student_name"]
         if result.get("student_contact"):
             st.session_state.student_contact = result["student_contact"]
+        if result.get("ticket_id"):
+            st.session_state.pending_ticket_id = result["ticket_id"]
 
     st.session_state.messages.append({
         "role": "assistant", "content": result["answer"],

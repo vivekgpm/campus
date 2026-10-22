@@ -92,7 +92,8 @@ BROCHURE_REPLY = "Sure! Use the download button below to get the official **GNDE
 
 ESCALATION_REPLY = (
     "I couldn't find specific details for your query in our official college documents.\n\n"
-    "🎫 **Ticket #{ticket_id}** has been proactively created and forwarded to the {college} T&P Cell / Authorities.\n\n"
+    "🎫 **Ticket #{ticket_id}** has been created for the {college} T&P Cell / Authorities. "
+    "An email draft was saved locally for staff review; it has not been sent automatically.\n\n"
     "{contact_note}"
 )
 
